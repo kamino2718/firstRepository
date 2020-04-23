@@ -1,45 +1,34 @@
-/***********DOM element***********/
-const leftTerm = document.getElementById("leftTerm");
-const rightTerm = document.getElementById("rightTerm");
-const equal = document.getElementById("equal");
-const outputResult = document.getElementById("outputResult");
-/***********[END]***********/
+const button = document.getElementById("runButton");
 
-/***********variable declaration***********/
-let operatorValue;
-let result;
-const operatorElement = document.getElementById("operators");
-let checkedElement;
-/***********[END]variable declaration***********/
+let result; //結果
+//距離の変数
+let distance_km;
+//ペースの変数
+let pace_minute;
+let pace_second;
+//時間の変数
+let time_hour;
+let time_minute;
+let time_second;
 
-/***********event handler***********/
-//equalButtonを押したときのイベントハンドラ
-equal.addEventListener("click", () => {
-    
-    for(i=0;i<operatorElement.length;i++) {
-        if(operatorElement[i].selected) {
-            checkedElement = operatorElement[i].value;
-            break;
-        }
-    }
+/***********Function Definition***********/
+function transfer_hhmmssToSs(hour,minute,second) {
+    return hour*3600 + minute*60 + second;
+}
+/***********[END]Function Definition***********/
 
-    if(checkedElement === "+") {
-        result = leftTerm.valueAsNumber + rightTerm.valueAsNumber;
-    } else if(checkedElement === "-") {
-        result = leftTerm.valueAsNumber - rightTerm.valueAsNumber;
-    } else if(checkedElement === "*") {
-        result = leftTerm.valueAsNumber * rightTerm.valueAsNumber;
-    } else if(checkedElement === "/") {
-        result = leftTerm.valueAsNumber / rightTerm.valueAsNumber;
-    } else {
-        result = "error";
-    }
+
+button.addEventListener("click", () => {
+    pace_minute = document.getElementById("inputDistanceModePace_minute").valueAsNumber;
+    pace_second = document.getElementById("inputDistanceModePace_second").valueAsNumber;
+
+    time_hour = document.getElementById("inputDistanceModeTime_hour").valueAsNumber;
+    time_minute = document.getElementById("inputDistanceModeTime_minute").valueAsNumber;
+    time_second = document.getElementById("inputDistanceModeTime_second").valueAsNumber;
+
+    result =  transfer_hhmmssToSs(time_hour,time_minute,time_second) / transfer_hhmmssToSs(0,pace_minute,pace_second) 
 
     console.log(result);
-    outputResult.innerHTML = result;
-})
-/***********[END]prototype　initialized***********/
+    document.getElementById("output").textContent = result +"km";
 
-/*main code*/
-
-/*[END]main code*/
+});
